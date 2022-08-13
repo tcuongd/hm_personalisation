@@ -4,6 +4,7 @@
 **/*.ipynb
 **/*.csv
 **/*.json
+**/__pycache__/**
 saved_models/**
 data/**
 training_logs/**
