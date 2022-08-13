@@ -1,0 +1,75 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+numpy = "*"
+scipy = "*"
+matplotlib = "*"
+seaborn = "*"
+jupyterlab = "*"
+polars = "*"
+torch = "*"
+scikit-learn = "*"
+xgboost = "*"
+loguru = "*"
+pyarrow = "*"
+click = "*"
+
+[dev-packages]
+black = "*"
+isort = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
+
+[scripts]
+train_baseline = """\
+  python -m hm_personalisation.train_validate \
+  --model-name MFBaseline --model-version v1 \
+  --train-filename 'dev/train__t_discount=0-0__price_discount=0-0.csv' \
+  --num-latent-features 5 --learning-rate 0.03 --batch-size 150000 --epochs 20 \
+  --val-perc 0.005
+"""
+score_baseline = """\
+  python -m hm_personalisation.predict \
+  --model-name MFBaseline --model-version v1 --epoch-number 9 \
+  --holdout-filename 'dev/holdout.csv'
+"""
+
+train_large_t_discount_no_price_discount = """\
+  python -m hm_personalisation.train_validate \
+  --model-name MFLargeTNoPrice --model-version v1 \
+  --train-filename 'dev/train__t_discount=0-01__price_discount=0-0.csv' \
+  --num-latent-features 5 --learning-rate 0.03 --batch-size 150000 --epochs 20 \
+  --val-perc 0.005
+"""
+
+train_small_t_discount_no_price_discount = """\
+  python -m hm_personalisation.train_validate \
+  --model-name MFSmallTNoPrice --model-version v1 \
+  --train-filename 'dev/train__t_discount=0-001__price_discount=0-0.csv' \
+  --num-latent-features 5 --learning-rate 0.03 --batch-size 150000 --epochs 20 \
+  --val-perc 0.005
+"""
+
+train_large_t_discount_price_discount = """\
+  python -m hm_personalisation.train_validate \
+  --model-name MFLargeTPrice --model-version v1 \
+  --train-filename 'dev/train__t_discount=0-01__price_discount=1-0.csv' \
+  --num-latent-features 5 --learning-rate 0.03 --batch-size 150000 --epochs 20 \
+  --val-perc 0.005
+"""
+
+train_small_t_discount_price_discount = """\
+  python -m hm_personalisation.train_validate \
+  --model-name MFSmallTPrice --model-version v1 \
+  --train-filename 'dev/train__t_discount=0-001__price_discount=1-0.csv' \
+  --num-latent-features 5 --learning-rate 0.03 --batch-size 150000 --epochs 20 \
+  --val-perc 0.005
+"""

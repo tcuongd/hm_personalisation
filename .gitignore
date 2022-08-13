@@ -1,0 +1,10 @@
+**/*.DS_Store
+**/*.egg-info
+
+**/*.ipynb
+**/*.csv
+**/*.json
+saved_models/**
+data/**
+training_logs/**
+predictions/**
